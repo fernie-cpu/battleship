@@ -14,4 +14,20 @@ const gameboardFactory = (coords) => {
       });
     }
   };
+
+  if (_.isEmpty(boardInfo.board)) {
+    initBoard();
+  }
+
+  const allShipSunk = () => {
+    for (let square of boardInfo.board) {
+      if (square.ship !== false) {
+        if (square.beenHit === false) {
+          boardInfo.shipsLeft = true;
+          return;
+        }
+      }
+    }
+    boardInfo.shipsLeft = false;
+  };
 };
