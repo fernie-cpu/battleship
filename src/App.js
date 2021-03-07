@@ -1,5 +1,7 @@
 import React from 'react';
 import shipFactory from './factories/shipFactory';
+import playerFactory from './factories/playerFactory';
+import gameboardFactory from './factories/gameboardFactory';
 
 function App() {
   return (
