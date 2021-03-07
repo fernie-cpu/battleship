@@ -30,4 +30,9 @@ const gameboardFactory = (coords) => {
     }
     boardInfo.shipsLeft = false;
   };
+
+  const receiveAttack = (coords) => {
+    boardInfo.board[coords].beenHit = true;
+    allShipSunk();
+  };
 };
