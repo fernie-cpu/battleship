@@ -1,12 +1,8 @@
 import React from 'react';
-import './App.css';
+import Ship from './components/Ship';
 
 function App() {
-  return (
-    <div className='App'>
-      <h1>No idea of what you're doing huh?</h1>
-    </div>
-  );
+  return <div className='App'>{console.log(Ship(5, [3, 2], false))}</div>;
 }
 
 export default App;
