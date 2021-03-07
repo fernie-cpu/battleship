@@ -35,4 +35,20 @@ const gameboardFactory = (coords) => {
     boardInfo.board[coords].beenHit = true;
     allShipSunk();
   };
+
+  const placeShip = (shipID, startCoord, shipLength, isVertical) => {
+    if (isVertical) {
+      for (let i = 0; i < shipLength; i++) {
+        boardInfo.board[startCoord + i * 10].ship = shipID;
+      }
+    } else {
+      for (let i = 0; i < shipLength; i++) {
+        boardInfo.board[startCoord + i].ship = shipID;
+      }
+    }
+  };
+
+  return { boardInfo, receiveAttack, placeShip };
 };
+
+export default gameboardFactory;
