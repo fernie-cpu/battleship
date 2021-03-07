@@ -1,5 +1,5 @@
 import React from 'react';
-import Ship from './components/Ship';
+import shipFactory from './factories/shipFactory';
 
 function App() {
   return (
