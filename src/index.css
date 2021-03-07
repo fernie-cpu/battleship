@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.app-gameboard-container {
+  display: flex;
+  justify-content: center;
+}
+
 .gameboard-grid-container {
   display: grid;
   grid-template-columns: repeat(10, auto);
