@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.gameboard-grid-container {
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  grid-template-rows: repeat(10, auto);
+}
+
+.grid-square {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+}

@@ -1,12 +1,13 @@
 import React from 'react';
-import shipFactory from './factories/shipFactory';
-import playerFactory from './factories/playerFactory';
-import gameboardFactory from './factories/gameboardFactory';
+import Gameboard from './components/Gameboard';
 
 function App() {
   return (
     <div className='App'>
-      <h2>still no clue what you're doing, i see</h2>
+      <h1>still no clue what you're doing, i see</h1>
+      <div className='app-gameboard-container'>
+        <Gameboard />
+      </div>
     </div>
   );
 }
