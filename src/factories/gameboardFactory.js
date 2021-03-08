@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
-const gameboardFactory = (coords) => {
+const gameboardFactory = (ownerName) => {
   const boardInfo = {
     board: [],
     shipsLeft: true,
+    owner: ownerName,
   };
 
   const initBoard = () => {
