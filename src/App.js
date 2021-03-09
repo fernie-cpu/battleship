@@ -6,12 +6,22 @@ import _ from 'lodash';
 const App = () => {
   const [player1, setPlayer1] = useState({});
   const [player2, setPlayer2] = useState({});
-  const [player1turn, setPlayer1Turn] = useState(true);
+  const [player1turn, setPlayer1Turn] = useState(null);
+  const [winner, setWinner] = useState(false);
 
   useEffect(() => {
     setPlayer1(playerFactory('player'));
     setPlayer2(playerFactory('computer'));
+    setPlayer1Turn(false);
   }, []);
+
+  const gameLoop = (checkWinner, curPlayer) => {
+    if (checkWinner) {
+      setPlayer1Turn(!player1turn);
+    } else {
+      curPlayer === 'computer' ? setWinner(player1) : setWinner(player2);
+    }
+  };
 
   return (
     <div className='App'>
