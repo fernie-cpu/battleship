@@ -9,7 +9,8 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
   useEffect(() => {
     const ships = [];
     for (let i = 1; i < 6; i++) {
-      ships.push(shipFactory(i, i, false));
+      let y = Math.round(Math.random() * 10) > 5;
+      ships.push(shipFactory(i, i, y));
     }
 
     //init the gameboard
@@ -26,8 +27,14 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
       while (alreadyPlaced.includes(startCoord)) {
         //square that will be placed if ship is placed at current starting coord
         let willBePlaced = [];
-        for (let i = 0; ship.shipLength; i++) {
-          willBePlaced.push(startCoord + i);
+        if (ship.isVertical) {
+          for (let i = 0; ship.shipLength; i++) {
+            willBePlaced.push(startCoord + i * 10);
+          }
+        } else {
+          for (let i = 0; ship.shipLength; i++) {
+            willBePlaced.push(startCoord + i);
+          }
         }
         //checks to make sure placement will be valid
         while (
@@ -45,8 +52,14 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
         ) {
           willBePlaced.length = 0;
           startCoord = getRandom();
-          for (let i = 0; i < ship.shipLength; i++) {
-            willBePlaced.push(startCoord + i);
+          if (ship.isVertical) {
+            for (let i = 0; i < ship.shipLength; i++) {
+              willBePlaced.push(startCoord + i * 10);
+            }
+          } else {
+            for (let i = 0; i < ship.shipLength; i++) {
+              willBePlaced.push(startCoord + i);
+            }
           }
         }
         alreadyPlaced.push(...willBePlaced);
