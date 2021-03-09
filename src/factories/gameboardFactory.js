@@ -37,14 +37,14 @@ const gameboardFactory = (ownerName) => {
     allShipSunk();
   };
 
-  const placeShip = (shipID, startCoord, shipLength, isVertical) => {
-    if (isVertical) {
-      for (let i = 0; i < shipLength; i++) {
-        boardInfo.board[startCoord + i * 10].ship = shipID;
+  const placeShip = (ship, startCoord) => {
+    if (ship.isVertical) {
+      for (let i = 0; i < ship.length; i++) {
+        boardInfo.board[startCoord + i * 10].ship = ship.id;
       }
     } else {
-      for (let i = 0; i < shipLength; i++) {
-        boardInfo.board[startCoord + i].ship = shipID;
+      for (let i = 0; i < ship.length; i++) {
+        boardInfo.board[startCoord + i].ship = ship.id;
       }
     }
   };
