@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Gameboard from './components/Gameboard';
 import playerFactory from './factories/playerFactory';
+import Winner from './components/Winner';
 import _ from 'lodash';
 
 const App = () => {
@@ -26,10 +27,19 @@ const App = () => {
   return (
     <div className='App'>
       <h1>still no clue what you're doing, i see</h1>
+      {winner ? <Winner player={winner} /> : <h1>let's see</h1>}
       {_.isEmpty(player1) && _.isEmpty(player2) ? null : (
         <div className='app-gameboard-container'>
-          <Gameboard player={player1} />
-          <Gameboard player={player2} />
+          <Gameboard
+            player={player1}
+            yourTurn={player1turn}
+            gameLoop={gameLoop}
+          />
+          <Gameboard
+            player={player2}
+            yourTurn={!player1turn}
+            gameLoop={gameLoop}
+          />
         </div>
       )}
     </div>

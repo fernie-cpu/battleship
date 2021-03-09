@@ -28,8 +28,23 @@ code {
   width: 40px;
   height: 40px;
   border: 1px solid black;
+  background: blue;
+}
+
+.square-hover:hover {
+  background: lightgray;
 }
 
 .ship {
-  background: blue;
+  background: gray;
+}
+
+.hit {
+  background: red;
+}
+
+.winner {
+  z-index: 100000;
+  font-size: 3rem;
+  color: red;
 }

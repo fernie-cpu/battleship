@@ -3,7 +3,7 @@ import gameboardFactory from '../factories/gameboardFactory';
 import shipFactory from '../factories/shipFactory';
 import _ from 'lodash';
 
-const Gameboard = ({ player }) => {
+const Gameboard = ({ player, yourTurn, gameLoop }) => {
   const [board, setBoard] = useState({});
 
   useEffect(() => {
@@ -58,6 +58,25 @@ const Gameboard = ({ player }) => {
     setBoard(gameboard);
   }, [player]);
 
+  useEffect(() => {
+    if (!_.isEmpty(board)) {
+      if (board.boardInfo.owner.playerInfo.name !== 'computer' && yourTurn) {
+        setTimeout(() => {
+          board.receiveAttack(board.boardInfo.owner.AI());
+          gameLoop(
+            board.boardInfo.shipsLeft,
+            board.boardInfo.owner.playerInfo.name
+          );
+        }, 500);
+      }
+    }
+  }, [yourTurn, board, gameLoop]);
+
+  const handleClick = (e) => {
+    board.receiveAttack(e.target.id.split('-')[1]);
+    gameLoop(board.boardInfo.shipsLeft, board.boardInfo.owner.playerInfo.name);
+  };
+
   return (
     <div>
       {_.isEmpty(board) ? null : (
@@ -68,11 +87,19 @@ const Gameboard = ({ player }) => {
             {board.boardInfo.board.map((square, index) => {
               return (
                 <div
+                  onClick={(e) => {
+                    if (yourTurn) {
+                      handleClick(e);
+                    }
+                  }}
                   key={index}
                   id={`${player.playerInfo.name}-${index}`}
-                  className={`${
-                    square.ship !== false ? 'ship' : ''
-                  } grid-square`}
+                  className={`${square.ship !== false ? 'ship' : ''} ${
+                    square.beenHit ? 'hit' : ''
+                  } ${
+                    player.playerInfo.name === 'computer' ? 'square-hover' : ''
+                  } 
+                  grid-square`}
                 ></div>
               );
             })}
