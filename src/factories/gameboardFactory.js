@@ -21,14 +21,18 @@ const gameboardFactory = (ownerName) => {
   }
 
   const allShipSunk = () => {
+    //loop through board
     for (let square of boardInfo.board) {
+      //check if square conntains ship
       if (square.ship !== false) {
+        //if it does check if square been hit
         if (square.beenHit === false) {
           boardInfo.shipsLeft = true;
           return;
         }
       }
     }
+    //all squares with a ship has been hit
     boardInfo.shipsLeft = false;
   };
 
@@ -39,11 +43,11 @@ const gameboardFactory = (ownerName) => {
 
   const placeShip = (ship, startCoord) => {
     if (ship.isVertical) {
-      for (let i = 0; i < ship.length; i++) {
+      for (let i = 0; i < ship.shipLength; i++) {
         boardInfo.board[startCoord + i * 10].ship = ship.id;
       }
     } else {
-      for (let i = 0; i < ship.length; i++) {
+      for (let i = 0; i < ship.shipLength; i++) {
         boardInfo.board[startCoord + i].ship = ship.id;
       }
     }

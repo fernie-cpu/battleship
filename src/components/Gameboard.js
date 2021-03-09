@@ -12,18 +12,47 @@ const Gameboard = ({ player }) => {
       ships.push(shipFactory(i, i, false));
     }
 
+    //init the gameboard
     const gameboard = gameboardFactory(player);
+    // create array that keeps track of squares already placed
     const alreadyPlaced = [];
+    //loop through array of generated ships
     for (let j = 0; j < ships.length; j++) {
+      let ship = ships[j];
       const getRandom = () => {
         return Math.floor(Math.random() * 100);
       };
       let startCoord = getRandom();
       while (alreadyPlaced.includes(startCoord)) {
-        startCoord = getRandom();
+        //square that will be placed if ship is placed at current starting coord
+        let willBePlaced = [];
+        for (let i = 0; ship.shipLength; i++) {
+          willBePlaced.push(startCoord + i);
+        }
+        //checks to make sure placement will be valid
+        while (
+          alreadyPlaced.some((item) => willBePlaced.includes(item)) ||
+          (willBePlaced.includes(9) && willBePlaced.includes(10)) ||
+          (willBePlaced.includes(19) && willBePlaced.includes(20)) ||
+          (willBePlaced.includes(29) && willBePlaced.includes(30)) ||
+          (willBePlaced.includes(39) && willBePlaced.includes(40)) ||
+          (willBePlaced.includes(49) && willBePlaced.includes(50)) ||
+          (willBePlaced.includes(59) && willBePlaced.includes(60)) ||
+          (willBePlaced.includes(69) && willBePlaced.includes(70)) ||
+          (willBePlaced.includes(79) && willBePlaced.includes(80)) ||
+          (willBePlaced.includes(89) && willBePlaced.includes(90)) ||
+          willBePlaced.some((item) => item > 99)
+        ) {
+          willBePlaced.length = 0;
+          startCoord = getRandom();
+          for (let i = 0; i < ship.shipLength; i++) {
+            willBePlaced.push(startCoord + i);
+          }
+        }
+        alreadyPlaced.push(...willBePlaced);
+        gameboard.placeShip(ships, startCoord);
+        willBePlaced.length = 0;
       }
-      alreadyPlaced.push(startCoord);
-      gameboard.placeShip(ships[j], startCoord);
     }
 
     setBoard(gameboard);
