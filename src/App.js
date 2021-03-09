@@ -11,8 +11,8 @@ const App = () => {
   const [winner, setWinner] = useState(false);
 
   useEffect(() => {
-    setPlayer1(playerFactory('player'));
-    setPlayer2(playerFactory('computer'));
+    setPlayer1(playerFactory('You'));
+    setPlayer2(playerFactory('Computer'));
     setPlayer1Turn(false);
   }, []);
 
@@ -20,7 +20,7 @@ const App = () => {
     if (checkWinner) {
       setPlayer1Turn(!player1turn);
     } else {
-      curPlayer === 'computer' ? setWinner(player1) : setWinner(player2);
+      curPlayer === 'Computer' ? setWinner(player1) : setWinner(player2);
     }
   };
 

@@ -29,6 +29,11 @@ code {
   height: 40px;
   border: 1px solid black;
   background: blue;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .square-hover:hover {

@@ -60,7 +60,7 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
 
   useEffect(() => {
     if (!_.isEmpty(board)) {
-      if (board.boardInfo.owner.playerInfo.name !== 'computer' && yourTurn) {
+      if (board.boardInfo.owner.playerInfo.name !== 'Computer' && yourTurn) {
         setTimeout(() => {
           board.receiveAttack(board.boardInfo.owner.AI());
           gameLoop(
@@ -73,8 +73,14 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
   }, [yourTurn, board, gameLoop]);
 
   const handleClick = (e) => {
-    board.receiveAttack(e.target.id.split('-')[1]);
-    gameLoop(board.boardInfo.shipsLeft, board.boardInfo.owner.playerInfo.name);
+    let targetCoord = e.target.id.split('-')[1];
+    if (!board.boardInfo.board[targetCoord].beenHit) {
+      board.receiveAttack(targetCoord);
+      gameLoop(
+        board.boardInfo.shipsLeft,
+        board.boardInfo.owner.playerInfo.name
+      );
+    }
   };
 
   return (
@@ -94,13 +100,18 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
                   }}
                   key={index}
                   id={`${player.playerInfo.name}-${index}`}
-                  className={`${square.ship !== false ? 'ship' : ''} ${
-                    square.beenHit ? 'hit' : ''
-                  } ${
-                    player.playerInfo.name === 'computer' ? 'square-hover' : ''
+                  className={`${
+                    square.ship !== false &&
+                    player.playerInfo.name === 'Computer'
+                      ? 'ship'
+                      : ''
+                  } ${square.beenHit && square.ship ? 'hit' : ''} ${
+                    player.playerInfo.name === 'Computer' ? 'square-hover' : ''
                   } 
                   grid-square`}
-                ></div>
+                >
+                  {square.beenHit ? 'X' : ''}
+                </div>
               );
             })}
           </div>
