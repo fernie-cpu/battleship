@@ -37,6 +37,8 @@ const GameContainer = ({
       setPlayer1Turn(!player1turn);
     } else {
       curPlayer === 'Computer' ? setWinner(player1) : setWinner(player2);
+      player1.resetPastShots();
+      setPlayer1Turn(false);
     }
   };
 
