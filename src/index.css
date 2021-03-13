@@ -27,6 +27,8 @@ code {
   grid-template-columns: repeat(10, auto);
   grid-template-rows: repeat(10, auto);
   margin: 20px;
+  row-gap: 0;
+  column-gap: 0;
 }
 
 .grid-square {
@@ -57,4 +59,10 @@ code {
   z-index: 100000;
   font-size: 2.8rem;
   color: red;
+}
+
+@media screen and (max-width: 760px) {
+  .hide {
+    display: none;
+  }
 }
