@@ -2,19 +2,30 @@ import React, { useState, useEffect } from 'react';
 import Gameboard from './Gameboard';
 import Winner from './Winner';
 import playerFactory from '../factories/playerFactory';
+import PlayerForm from './PlayerForm';
 import _ from 'lodash';
 
-const GameContainer = () => {
+const GameContainer = ({
+  restart,
+  setRestart,
+  isGame,
+  setIsGame,
+  setShowControls,
+}) => {
   const [player1, setPlayer1] = useState({});
   const [player2, setPlayer2] = useState({});
   const [player1turn, setPlayer1Turn] = useState(null);
   const [winner, setWinner] = useState(false);
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
-    setPlayer1(playerFactory('You'));
+    // setPlayer1(playerFactory('You'));
     setPlayer2(playerFactory('Computer'));
     setPlayer1Turn(false);
-  }, []);
+    if (start) {
+      setShowControls(true);
+    }
+  }, [start, setIsGame, setShowControls]);
 
   const gameLoop = (checkWinner, curPlayer) => {
     if (checkWinner) {
@@ -27,17 +38,29 @@ const GameContainer = () => {
   return (
     <div>
       {winner ? <Winner player={winner} /> : null}
-      {_.isEmpty(player1) && _.isEmpty(player2) ? null : (
+      {!start ? (
+        <PlayerForm setStart={setStart} setPlayer1={setPlayer1} />
+      ) : (
         <div className='app-gameboard-container'>
           <Gameboard
             player={player1}
             yourTurn={player1turn}
             gameLoop={gameLoop}
+            start={start}
+            restart={restart}
+            setRestart={setRestart}
+            isGame={isGame}
+            setIsGame={setIsGame}
           />
           <Gameboard
             player={player2}
             yourTurn={!player1turn}
             gameLoop={gameLoop}
+            start={start}
+            restart={restart}
+            setRestart={setRestart}
+            isGame={isGame}
+            setIsGame={setIsGame}
           />
         </div>
       )}
