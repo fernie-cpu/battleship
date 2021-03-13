@@ -33,48 +33,46 @@ const Gameboard = ({
         return Math.floor(Math.random() * 100);
       };
       let startCoord = getRandom();
-      while (alreadyPlaced.includes(startCoord)) {
-        //square that will be placed if ship is placed at current starting coord
-        let willBePlaced = [];
+      //square that will be placed if ship is placed at current starting coord
+      let willBePlaced = [];
+      if (ship.isVertical) {
+        for (let i = 0; i < ship.shipLength; i++) {
+          willBePlaced.push(startCoord + i * 10);
+        }
+      } else {
+        for (let i = 0; i < ship.shipLength; i++) {
+          willBePlaced.push(startCoord + i);
+        }
+      }
+      //checks to make sure placement will be valid
+      while (
+        alreadyPlaced.some((item) => willBePlaced.includes(item)) ||
+        (willBePlaced.includes(9) && willBePlaced.includes(10)) ||
+        (willBePlaced.includes(19) && willBePlaced.includes(20)) ||
+        (willBePlaced.includes(29) && willBePlaced.includes(30)) ||
+        (willBePlaced.includes(39) && willBePlaced.includes(40)) ||
+        (willBePlaced.includes(49) && willBePlaced.includes(50)) ||
+        (willBePlaced.includes(59) && willBePlaced.includes(60)) ||
+        (willBePlaced.includes(69) && willBePlaced.includes(70)) ||
+        (willBePlaced.includes(79) && willBePlaced.includes(80)) ||
+        (willBePlaced.includes(89) && willBePlaced.includes(90)) ||
+        willBePlaced.some((item) => item > 99)
+      ) {
+        willBePlaced.length = 0;
+        startCoord = getRandom();
         if (ship.isVertical) {
-          for (let i = 0; ship.shipLength; i++) {
+          for (let i = 0; i < ship.shipLength; i++) {
             willBePlaced.push(startCoord + i * 10);
           }
         } else {
-          for (let i = 0; ship.shipLength; i++) {
+          for (let i = 0; i < ship.shipLength; i++) {
             willBePlaced.push(startCoord + i);
           }
         }
-        //checks to make sure placement will be valid
-        while (
-          alreadyPlaced.some((item) => willBePlaced.includes(item)) ||
-          (willBePlaced.includes(9) && willBePlaced.includes(10)) ||
-          (willBePlaced.includes(19) && willBePlaced.includes(20)) ||
-          (willBePlaced.includes(29) && willBePlaced.includes(30)) ||
-          (willBePlaced.includes(39) && willBePlaced.includes(40)) ||
-          (willBePlaced.includes(49) && willBePlaced.includes(50)) ||
-          (willBePlaced.includes(59) && willBePlaced.includes(60)) ||
-          (willBePlaced.includes(69) && willBePlaced.includes(70)) ||
-          (willBePlaced.includes(79) && willBePlaced.includes(80)) ||
-          (willBePlaced.includes(89) && willBePlaced.includes(90)) ||
-          willBePlaced.some((item) => item > 99)
-        ) {
-          willBePlaced.length = 0;
-          startCoord = getRandom();
-          if (ship.isVertical) {
-            for (let i = 0; i < ship.shipLength; i++) {
-              willBePlaced.push(startCoord + i * 10);
-            }
-          } else {
-            for (let i = 0; i < ship.shipLength; i++) {
-              willBePlaced.push(startCoord + i);
-            }
-          }
-        }
-        alreadyPlaced.push(...willBePlaced);
-        gameboard.placeShip(ships, startCoord);
-        willBePlaced.length = 0;
       }
+      gameboard.placeShip(ship, startCoord);
+      alreadyPlaced.push(...willBePlaced);
+      willBePlaced.length = 0;
     }
 
     setBoard(gameboard);
@@ -143,7 +141,7 @@ const Gameboard = ({
                   id={`${player.playerInfo.name}-${index}`}
                   className={`${
                     square.ship !== false &&
-                    player.playerInfo.name === 'Computer'
+                    player.playerInfo.name !== 'Computer'
                       ? 'ship'
                       : ''
                   } ${square.beenHit && square.ship ? 'hit' : ''} ${
