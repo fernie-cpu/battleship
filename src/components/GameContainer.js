@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Gameboard from './Gameboard';
-import Winner from './Winner';
 import playerFactory from '../factories/playerFactory';
 import PlayerForm from './PlayerForm';
-import _ from 'lodash';
 
 const GameContainer = ({
   restart,
@@ -11,11 +9,11 @@ const GameContainer = ({
   isGame,
   setIsGame,
   setShowControls,
+  setWinner,
 }) => {
   const [player1, setPlayer1] = useState({});
   const [player2, setPlayer2] = useState({});
   const [player1turn, setPlayer1Turn] = useState(null);
-  const [winner, setWinner] = useState(false);
   const [start, setStart] = useState(false);
 
   useEffect(() => {
@@ -37,7 +35,6 @@ const GameContainer = ({
 
   return (
     <div>
-      {winner ? <Winner player={winner} /> : null}
       {!start ? (
         <PlayerForm setStart={setStart} setPlayer1={setPlayer1} />
       ) : (
