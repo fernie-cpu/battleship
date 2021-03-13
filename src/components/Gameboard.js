@@ -18,7 +18,7 @@ const Gameboard = ({
   const generateShipsOnBoard = useCallback(() => {
     const ships = [];
     for (let i = 1; i < 6; i++) {
-      let y = Math.round(Math.random() * 10) > 5;
+      let y = Math.round(Math.random() * 10 + 1) > 5;
       ships.push(shipFactory(i, i, y));
     }
 
@@ -98,7 +98,9 @@ const Gameboard = ({
     if (!_.isEmpty(board)) {
       if (board.boardInfo.owner.playerInfo.name !== 'Computer' && yourTurn) {
         setTimeout(() => {
-          board.receiveAttack(board.boardInfo.owner.AI());
+          board.receiveAttack(
+            board.boardInfo.owner.AI(board.boardInfo.lastShot)
+          );
           gameLoop(
             board.boardInfo.shipsLeft,
             board.boardInfo.owner.playerInfo.name

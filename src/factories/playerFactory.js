@@ -4,18 +4,51 @@ const playerFactory = (name) => {
     pastShots: [],
   };
 
-  const AI = () => {
-    const getRandom = () => {
-      return Math.floor(Math.random() * 100);
-    };
-    let randomMove = getRandom();
+  const getRandom = (num) => {
+    return Math.floor(Math.random() * num);
+  };
 
-    while (playerInfo.pastShots.includes(randomMove)) {
-      randomMove = getRandom();
+  const AI = (lastShot) => {
+    if (lastShot.hit) {
+      const figureNext = (lastShot) => {
+        let ranNum = getRandom(4);
+        let nextMove;
+        switch (ranNum) {
+          case 0:
+            nextMove = lastShot.location + 1;
+            break;
+          case 1:
+            nextMove = lastShot.location - 1;
+            break;
+          case 2:
+            nextMove = lastShot.location + 10;
+            break;
+          case 3:
+            nextMove = lastShot.location - 10;
+            break;
+          default:
+            console.log('nah');
+        }
+        return nextMove;
+      };
+      let nextMove = figureNext(lastShot);
+      while (
+        playerInfo.pastShots.includes(nextMove) ||
+        nextMove > 99 ||
+        nextMove < 0
+      ) {
+        nextMove = figureNext(lastShot);
+      }
+      playerInfo.pastShots.push(nextMove);
+      return nextMove;
+    } else {
+      let ranMove = getRandom(100);
+      while (playerInfo.pastShots.includes(ranMove)) {
+        ranMove = getRandom(100);
+      }
+      playerInfo.pastShots.push(ranMove);
+      return ranMove;
     }
-
-    playerInfo.pastShots.push(randomMove);
-    return randomMove;
   };
 
   return {

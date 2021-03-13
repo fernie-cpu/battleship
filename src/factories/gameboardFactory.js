@@ -5,6 +5,10 @@ const gameboardFactory = (ownerName) => {
     board: [],
     shipsLeft: true,
     owner: ownerName,
+    lastShot: {
+      hit: false,
+      location: false,
+    },
   };
 
   const initBoard = () => {
@@ -38,6 +42,13 @@ const gameboardFactory = (ownerName) => {
 
   const receiveAttack = (coords) => {
     boardInfo.board[coords].beenHit = true;
+    if (boardInfo.board[coords].ship !== false) {
+      boardInfo.lastShot.hit = true;
+      boardInfo.lastShot.location = coords;
+    } else {
+      boardInfo.lastShot.hit = false;
+      boardInfo.lastShot.location = false;
+    }
     allShipSunk();
   };
 
