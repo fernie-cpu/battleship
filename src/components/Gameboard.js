@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import gameboardFactory from '../factories/gameboardFactory';
 import shipFactory from '../factories/shipFactory';
 import _ from 'lodash';
 
-const Gameboard = ({ player, yourTurn, gameLoop }) => {
+const Gameboard = ({
+  player,
+  yourTurn,
+  gameLoop,
+  start,
+  restart,
+  setRestart,
+  isGame,
+  setIsGame,
+}) => {
   const [board, setBoard] = useState({});
 
-  useEffect(() => {
+  const generateShipsOnBoard = useCallback(() => {
     const ships = [];
     for (let i = 1; i < 6; i++) {
       let y = Math.round(Math.random() * 10) > 5;
@@ -72,6 +81,20 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
   }, [player]);
 
   useEffect(() => {
+    if (start) {
+      generateShipsOnBoard();
+    }
+  }, [start, generateShipsOnBoard]);
+
+  useEffect(() => {
+    if (restart) {
+      setBoard({});
+      generateShipsOnBoard();
+      setRestart(false);
+    }
+  }, [restart, setRestart, generateShipsOnBoard]);
+
+  useEffect(() => {
     if (!_.isEmpty(board)) {
       if (board.boardInfo.owner.playerInfo.name !== 'Computer' && yourTurn) {
         setTimeout(() => {
@@ -86,6 +109,9 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
   }, [yourTurn, board, gameLoop]);
 
   const handleClick = (e) => {
+    if (!isGame) {
+      setIsGame(true);
+    }
     let targetCoord = e.target.id.split('-')[1];
     if (!board.boardInfo.board[targetCoord].beenHit) {
       board.receiveAttack(targetCoord);
@@ -99,10 +125,10 @@ const Gameboard = ({ player, yourTurn, gameLoop }) => {
   return (
     <div>
       {_.isEmpty(board) ? null : (
-        <div>
+        <div className={`${yourTurn ? '' : 'hide'}`}>
           {' '}
-          <h3>{player.playerInfo.name}</h3>
-          <div className='gameboard-grid-container'>
+          <h3>{player.playerInfo.name}'s Board</h3>
+          <div className={'gameboard-grid-container'}>
             {board.boardInfo.board.map((square, index) => {
               return (
                 <div
