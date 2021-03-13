@@ -1,7 +1,7 @@
 import shipFactory from './shipFactory';
 
-let ship = shipFactory(5);
+let ship = shipFactory(1, 5, false);
 
 it('create ship', () => {
-  expect(ship.length).toBe(5);
+  expect(ship.shipLength).toBe(5);
 });

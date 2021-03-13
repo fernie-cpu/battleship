@@ -25,6 +25,13 @@ const GameContainer = ({
     }
   }, [start, setIsGame, setShowControls]);
 
+  useEffect(() => {
+    if (restart) {
+      player1.resetPastShots();
+      setPlayer1Turn(false);
+    }
+  }, [restart, player1]);
+
   const gameLoop = (checkWinner, curPlayer) => {
     if (checkWinner) {
       setPlayer1Turn(!player1turn);
