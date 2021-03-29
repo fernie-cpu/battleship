@@ -19,7 +19,7 @@ const PlayerForm = ({ setPlayer1, setStart }) => {
   };
 
   return (
-    <div>
+    <div className='divForm'>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
@@ -28,7 +28,7 @@ const PlayerForm = ({ setPlayer1, setStart }) => {
           value={p1}
           onChange={handleChange}
         />
-        <button>Play!</button>
+        <button>Play</button>
       </form>
     </div>
   );

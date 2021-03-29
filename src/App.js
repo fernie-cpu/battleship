@@ -11,8 +11,11 @@ const App = () => {
 
   return (
     <div className='App'>
-      <h1>still no clue what you're doing, i see</h1>
-      {winner ? <Winner player={winner} /> : <h1>Battleship</h1>}
+      {winner ? (
+        <Winner player={winner} />
+      ) : (
+        <h1 className='title'>Battleship</h1>
+      )}
       {showControls ? (
         <Controls
           isGame={isGame}

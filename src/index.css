@@ -17,9 +17,52 @@ code {
     monospace;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+h1.title {
+  font-size: 4rem;
+}
+
+.divForm {
+  margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divForm input {
+  border: 1px solid #ccc;
+  margin-right: 0.3rem;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.divForm button,
+.control button {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  color: white;
+  background: rgb(41, 35, 146);
+  border: 1px solid rgb(41, 35, 146);
+  cursor: pointer;
+}
+
+.divForm button:hover,
+.control button:hover {
+  background: rgb(64, 56, 214);
+  border-color: rgb(64, 56, 214);
+}
+
 .app-gameboard-container {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 }
 
 .gameboard-grid-container {
@@ -35,7 +78,7 @@ code {
   width: 40px;
   height: 40px;
   border: 1px solid black;
-  background: blue;
+  background: rgb(32, 32, 112);
   color: white;
   display: flex;
   justify-content: center;
@@ -52,7 +95,7 @@ code {
 }
 
 .hit {
-  background: red;
+  background: rgb(174, 13, 13);
 }
 
 .winner {

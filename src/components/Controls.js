@@ -2,7 +2,7 @@ import React from 'react';
 
 const Controls = ({ setRestart, isGame, setIsGame, setWinner }) => {
   return (
-    <div>
+    <div className='control'>
       <button
         onClick={() => {
           setIsGame(false);
